@@ -71,7 +71,7 @@ export default function Navbar () {
                   <Image
                       src={logo}
                       alt='logo tiket papa'
-                      className='drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)] object-contain object-left'
+                      className='drop-shadow-[0_2px_20px_rgba(255,255,255,0.5)] object-contain object-left'
                       fill
 
                 />

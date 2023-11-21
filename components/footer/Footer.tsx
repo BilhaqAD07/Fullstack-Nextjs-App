@@ -23,7 +23,7 @@ const socials = [
 
 const Footer = () => {
   return (
-    <div className='flex justify-between items-center z-50 p-4 mx-4'>
+    <div className='flex justify-between z-50 p-4 mx-4'>
         <div>
             <strong>Copyright</strong> &copy; 2023 BAD. All rights reserved.
         </div>

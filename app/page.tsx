@@ -4,6 +4,7 @@ import React from 'react'
 // components
 import Button from '@/components/button/Button'
 import Avatar from '@/components/avatar/Avatar'
+import ContainerParticles from '@/components/particles/ContainerParticles'
 
 // framer-motion
 import { motion } from 'framer-motion'
@@ -60,7 +61,7 @@ function Home() {
         </div>
         {/* Patciles */}
         <div>
-
+          <ContainerParticles/>
         </div>
         {/* Avatar Img */}
         <motion.div
