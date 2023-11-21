@@ -1,6 +1,7 @@
-import type { Config } from 'tailwindcss'
+const plugin = require('tailwindcss/plugin');
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,7 +10,7 @@ const config: Config = {
   theme: {
     container: {
       padding: {
-        DEFAULT: '1rem',
+        DEFAULT: '15px',
       },
     },
     screens: {
@@ -21,16 +22,34 @@ const config: Config = {
       xl: '1200px',
     },
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        primary: '#131424',
+        secondary: '#393A47',
+        accent: '#F13024'
       },
-      animation: {
-        'spin-low': 'spin 6s linear infinite'
+      backgroundImage: {
+        'explosion': 'url("/bg-explosion.png")',
+        'circles': 'url("/circles.png")',
+        'circleStar': 'url("/circle-star.svg")',
+        'site': 'url("/site-bg.svg")',
+      },
+      animation : {
+        'spin-low': 'spin 6s linear infinite',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+    plugin(function({ matchUtilities, theme }: any) {
+      matchUtilities(
+        {
+          'translate-z': (value: any) => ({
+            '--tw-translate-z': value,
+            transform: ` translate3d(var(--tw-translate-x), var(--tw-translate-y), var(--tw-translate-z)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))`,
+          }),
+        },
+        { values: theme('translate') }
+      )
+    })
+  ],
 }
-export default config
