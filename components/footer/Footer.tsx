@@ -23,11 +23,11 @@ const socials = [
 
 const Footer = () => {
   return (
-    <div className='flex justify-between z-50 p-4 mx-4'>
+    <div className='flex flex-col md:flex-row text-center md:text-start justify-center items-center md:justify-between z-50 gap-8 md:gap-0 p-4 mx-4'>
         <div>
-            <strong>Copyright</strong> &copy; 2023 BAD. All rights reserved.
+            &copy;2023 <strong>BAD.</strong> All rights reserved.
         </div>
-        <div className="flex flex-row text-xl gap-4 items-center justify-between">
+        <div className="flex flex-row text-xl gap-4 items-center justify-center md:justify-between">
           {socials.map((social) => (
             <Link key={social.id} href={social.url} className='hover:text-accent'>{social.icon}</Link>
           ))}

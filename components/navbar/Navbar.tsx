@@ -76,7 +76,7 @@ export default function Navbar () {
 
                 />
               </Link>
-              <button className='md:hidden text-2xl text-gray-700' onClick={ () => { handleNavigation() }}>
+              <button className='md:hidden text-2xl text-gray-300' onClick={ () => { handleNavigation() }}>
                   <FaBars/>
               </button>
 
@@ -96,12 +96,12 @@ export default function Navbar () {
           </div>
           <ul className= {`text-text-color font-semibold z-10 absolute md:hidden  w-full px-4 ${mobileActive ? 'block' : 'hidden'}`}>
             {links.map((link) => (
-                <li key={link.id} className={`${link.path === currentRoute ? 'text-accent': '' } relative group transition-all hover:text-accent duration-300`}>
-                    <Link className='flex justify-center items-center py-4 border border-b-neutral-200' href={link.path}>{link.icon} &nbsp; {link.title}</Link>
+                <li key={link.id} className={`${link.path === currentRoute ? 'text-accent': '' } relative group transition-all uppercase hover:text-accent duration-300`}>
+                    <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' href={link.path}>{link.icon} &nbsp; {link.title}</Link>
                 </li>
             ))}
-            <li className={`relative group transition-all hover:text-accent duration-300`}>
-                <Link className='flex justify-center items-center py-4 border border-b-neutral-200' href={'/'}><BiLogOut/> &nbsp; Logout</Link>
+            <li className={`relative group transition-all uppercase hover:text-accent duration-300`}>
+                <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' href={'/'}><BiLogOut/> &nbsp; Logout</Link>
             </li>
           </ul>
           <div className={`md:hidden absolute z-0 bg-opacity-30 bg-black w-full min-h-screen ${mobileActive ? 'block' : 'hidden'}`} onClick={() => { handleNavigation() }}>
