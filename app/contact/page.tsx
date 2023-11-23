@@ -1,7 +1,8 @@
 'use client'
 import React from 'react'
+import style from './page.module.css'
 
-// Components
+// Components 
 import Bulb from '@/components/bulb/Bulb'
 
 // Icons
@@ -14,7 +15,7 @@ import Image from 'next/image'
 
 export default function Contact() {
   return (
-    <div className='h-full bg-primary/30'>
+    <div className='h-full w-full bg-primary/30'>
       <div className="container mx-auto text-center xl:text-left flex items-center justify-center h-full">
         {/* Image */}
         <motion.div
@@ -22,14 +23,14 @@ export default function Contact() {
           initial='hidden'
           animate='show'
           exit='hidden' 
-          className="hidden md:flex w-full h-full"
+          className="hidden md:flex md:flex-1 w-full h-full"
         >
           <Image 
             src={'/contact.png'}
             alt='contact'
             width={300}
             height={300}
-            className=' object-contain'
+            className={style.image}
           />
         </motion.div>
         {/* Text & Form */}

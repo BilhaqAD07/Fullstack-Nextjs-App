@@ -16,7 +16,7 @@ const BaseLayout = ({children}: any) => {
     <AnimatePresence mode='wait'>
       <motion.div className="h-full">
         <Transition/>
-        <div className="page bg-site flex flex-col justify-between text-white bg-cover bg-no-repeat">
+        <div className="page bg-site flex flex-col justify-between text-white/80 bg-cover bg-no-repeat">
           <TopLeftImg/>
           <Navbar/>
           {children} 
