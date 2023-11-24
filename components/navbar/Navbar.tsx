@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     FaBars,
     FaHouseChimney,
@@ -96,8 +96,8 @@ export default function Navbar () {
           </div>
           <ul className= {`text-text-color font-semibold z-10 absolute md:hidden  w-full px-4 ${mobileActive ? 'block' : 'hidden'}`}>
             {links.map((link) => (
-                <li key={link.id} className={`${link.path === currentRoute ? 'text-accent': '' } relative group transition-all uppercase hover:text-accent duration-300`}>
-                    <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' href={link.path}>{link.icon} &nbsp; {link.title}</Link>
+                <li key={link.id} className={`relative group transition-all uppercase hover:text-accent duration-300`}>
+                    <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' onClick={() => { setMobileActive(false) }} href={link.path}>{link.icon} &nbsp; {link.title}</Link>
                 </li>
             ))}
             <li className={`relative group transition-all uppercase hover:text-accent duration-300`}>
