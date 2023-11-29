@@ -8,6 +8,16 @@
   box-sizing: border-box;
 }
 
+.dark {
+  background-color: black/30 !important;
+  color: white !important;
+}
+
+.light{
+  background-color: white/80 !important;
+  color: black !important;
+}
+
 @layer base {
   body {
     @apply overflow-hidden leading-relaxed;

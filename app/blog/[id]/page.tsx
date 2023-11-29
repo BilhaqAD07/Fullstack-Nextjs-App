@@ -1,7 +1,21 @@
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
-const Post = () => {
+async function getData(id: number) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    cache: 'no-store'
+  })
+
+  if (!res.ok) {
+    return notFound()
+  }
+
+  return res.json()
+}
+
+const Post = async ({params}: any) => {
+  const data = await getData(params.id)
   return (
     <div className='bg-black/30 h-full w-full overflow-y-scroll relative pb-8'>
       <div className="container mx-auto ">
@@ -9,7 +23,7 @@ const Post = () => {
           {/* Header Content */}
           <div className="info flex flex-1 justify-center flex-col gap-4">
             <h2 className='title text-xl md:text-4xl'>
-              Ini Judul
+              {data.title}
             </h2>
             <p className='desc text-sm md:text-base font-light'>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis consectetur nulla, at quam aliquid placeat, perspiciatis nam vero exercitationem deserunt obcaecati modi aliquam voluptas fugit laborum architecto quaerat officiis commodi.

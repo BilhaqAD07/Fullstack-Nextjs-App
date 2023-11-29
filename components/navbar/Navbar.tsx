@@ -2,7 +2,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import DarkModeToggle from '../DarkModeToggle/DarkModeToggle'
 import { useEffect, useState } from 'react'
 import {
     FaBars,
@@ -92,9 +91,6 @@ export default function Navbar () {
                         <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>Logout</span>
                         <BiLogOut className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]'/>
                     </button>
-                  </li>
-                  <li className=''>
-                    <DarkModeToggle/>
                   </li>
               </ul>
           </div>
