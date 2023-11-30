@@ -3,6 +3,7 @@ const nextConfig = {
     images: {
         domains: [
             'images.pexels.com',
+            'www.pexels.com',
             'assets.example.com'
         ]
     }

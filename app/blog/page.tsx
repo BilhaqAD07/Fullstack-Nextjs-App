@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 async function getData() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+  const res = await fetch('http://localhost:3000/api/posts', {
     cache: 'no-store',
   })
 
@@ -20,10 +20,10 @@ const Blog = async () => {
   return (
     <div className='relative overflow-y-scroll h-full w-full bg-black/30'>
       {data.map((item: any) => (
-        <Link className='p-8 md:p-12 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 mb-0' href={'/blog/testId'} key={item.id}>
+        <Link className='p-8 md:p-12 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 mb-0' href={`/blog/${item._id}`} key={item._id}>
           <div className="image-container flex items-center justify-center w-1/3">
             <Image
-              src={'https://images.pexels.com/photos/19146694/pexels-photo-19146694/free-photo-of-a-red-maple-tree-with-leaves-on-it.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+              src={item.img}
               alt='blog image'
               width={400}
               height={250}
@@ -36,7 +36,7 @@ const Blog = async () => {
               {item.title}
             </h2>
             <p className=" text-xs md:text-base text-center md:text-start">
-              {item.body}
+              {item.desc}
             </p>
           </div>
         </Link>
