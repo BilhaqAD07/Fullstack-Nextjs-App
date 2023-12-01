@@ -47,9 +47,6 @@ const { data, error, isLoading }: SWRResponse<Post[], Error> = useSWR(
   fetcher
 );
 
-
-  console.log(data)
-
   return (
     <BaseLayout>
       <div>Dashboard</div>
