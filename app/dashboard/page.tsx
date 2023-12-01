@@ -1,4 +1,6 @@
 'use client'
+import BaseLayout from '@/components/baseLayout/Layout';
+import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react'
 import useSWR, { SWRResponse } from 'swr';
 
@@ -33,6 +35,9 @@ const Dashboard = () => {
   //   getData()
   // }, [])
 
+
+const session = useSession()
+console.log(session)
   
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((res) => res.json());
@@ -46,7 +51,9 @@ const { data, error, isLoading }: SWRResponse<Post[], Error> = useSWR(
   console.log(data)
 
   return (
-    <div>Dashboard</div>
+    <BaseLayout>
+      <div>Dashboard</div>
+    </BaseLayout>
   )
 }
 
