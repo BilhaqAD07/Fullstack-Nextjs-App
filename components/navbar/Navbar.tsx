@@ -12,6 +12,7 @@ import {
     FaPhoneVolume,
 } from 'react-icons/fa6'
 import { BiSolidGridAlt, BiLogOut } from "react-icons/bi"
+import { signOut, useSession } from 'next-auth/react'
 
 const links = [
     {
@@ -55,9 +56,10 @@ const links = [
 export default function Navbar () {
   const [mobileActive, setMobileActive] = useState(false)
 
-  const logo = '/logo.svg'
-
+  const session = useSession() 
   const currentRoute = usePathname()
+
+  const logo = '/logo.svg'
 
   const handleNavigation = () => {
     mobileActive ? setMobileActive(false) : setMobileActive(true)
@@ -86,12 +88,14 @@ export default function Navbar () {
                         <Link href={link.path} className='drop-shadow-[0_5px_20px_rgba(255,50,100,0.45)] '>{link.title}</Link>
                     </li>
                   ))}
-                  <li className=''>
-                    <button className='btn rounded-full border border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
-                        <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>Logout</span>
-                        <BiLogOut className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]'/>
-                    </button>
-                  </li>
+                  {session.status === 'authenticated' && (
+                    <li className=''>
+                        <button onClick={() => signOut()} className='btn rounded-full border border-white/50 max-w-[170px] px-8 transition-all duration-300 flex items-center justify-center overflow-hidden hover:border-accent group'>
+                            <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-500'>Logout</span>
+                            <BiLogOut className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute text-[22px]'/>
+                        </button>
+                    </li>
+                  )}
               </ul>
           </div>
           <ul className= {`text-text-color font-semibold z-10 absolute md:hidden  w-full px-4 ${mobileActive ? 'block' : 'hidden'}`}>
@@ -100,9 +104,11 @@ export default function Navbar () {
                     <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' onClick={() => { setMobileActive(false) }} href={link.path}>{link.icon} &nbsp; {link.title}</Link>
                 </li>
             ))}
-            <li className={`relative group transition-all uppercase hover:text-accent duration-300`}>
-                <Link className='flex justify-center items-center py-4 border-b-2 border-b-gray-600' href={'/'}><BiLogOut/> &nbsp; Logout</Link>
-            </li>
+            {session.status === 'authenticated' && (
+                <li className={`relative group transition-all hover:text-accent duration-300`}>
+                    <button onClick={() => signOut()} className='flex justify-center items-center py-4 border-b-2 border-b-gray-600 uppercase w-full'><BiLogOut/> &nbsp; Logout</button>
+                </li>
+            )}
           </ul>
           <div className={`md:hidden absolute z-0 bg-opacity-30 bg-black w-full min-h-screen ${mobileActive ? 'block' : 'hidden'}`} onClick={() => { handleNavigation() }}>
 
