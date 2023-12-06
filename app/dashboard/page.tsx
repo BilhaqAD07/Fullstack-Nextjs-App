@@ -3,21 +3,15 @@ import BaseLayout from '@/components/baseLayout/Layout';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useSWR, { SWRResponse } from 'swr';
+
+import styles from './page.module.css'
 
 // framer-motion
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/variant'
 
-
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-  img: string;
-}
 
 const Dashboard = () => {
   // const [data, setData] = useState([])
@@ -44,74 +38,87 @@ const Dashboard = () => {
   // }, [])
 
 
-  const session = useSession()
-  const router = useRouter()
-  
-  const fetcher = (...args: Parameters<typeof fetch>) =>
-    fetch(...args).then((res) => res.json());
+  const session = useSession();
 
-  const { data, error, isLoading }: SWRResponse<Post[], Error> = useSWR(
+  const router = useRouter();
+  
+  //NEW WAY TO FETCH DATA
+  const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+
+  const { data, mutate, error, isLoading } : SWRResponse = useSWR(
     '/api/posts?username=' + session.data?.user?.name,
     fetcher
   );
 
-  console.log(data)
+  if (session.status === "loading") {
+    return <p>Loading...</p>;
+  }
 
-  const handleSubmit = async (e:any) => {
-    e.preventDefault()
+  if (session.status === "unauthenticated") {
+    router?.push("/dashboard/login");
+  }
 
-    const title = e.target[0].value
-    const body = e.target[1].value
-    const img = e.target[2].value
-    const content = e.target[3].value
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const title = e.target[0].value;
+    const desc = e.target[1].value;
+    const img = e.target[2].value;
+    const content = e.target[3].value;
 
     try {
-      await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+      await fetch("/api/posts", {
+        method: "POST",
         body: JSON.stringify({
           title,
-          body,
+          desc,
           img,
           content,
-          username: session.data?.user?.name
-        })
-      })
-      } catch (err) {
-        console.log(err)
-      }
-  }
+          username: session.data?.user?.name,
+        }),
+      });
+      mutate();
+      e.target.reset()
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  if(session.status ==='loading') {
-    return <div>Loading...</div>
-  }
-
-  if(session.status === 'unauthenticated') {
-    router?.push('/dashboard/login')
-  }
+  const handleDelete = async (id: any) => {
+    try {
+      await fetch(`/api/posts/${id}`, {
+        method: "DELETE",
+      });
+      mutate();
+    } catch (err) {
+      console.log(err);
+    }
+  };
     
 
   if (session.status === 'authenticated') {
     return (
       <BaseLayout>
-        <div className='container mx-auto'>
-          <div className="my-post ">
-            {isLoading ? "Loading...": data?.map((post: Post) => (
-              <div className="card w-96 bg-base-100 shadow-xl" key={post.id}>
-                <div className="card-header">
-                  <Image src={post.img} alt={post.title}></Image>
-                </div>
-                <div className="card-body">
-                  <h2 className="card-title">{post.title}</h2>
-                  <span className='delete'>X</span>
-                </div>
-              </div>
-            ))}
+        <div className='container mx-auto flex gap-12'>
+          <div className={styles.posts}>
+            {isLoading
+              ? "loading"
+              : data?.map((post: any) => (
+                  <div className={styles.post} key={post._id}>
+                    <div className={styles.imgContainer}>
+                      <Image src={post.img} alt="" width={200} height={100} />
+                    </div>
+                    <h2 className={styles.postTitle}>{post.title}</h2>
+                    <button
+                      className="delete-button px-4 p-2 text-accent border rounded-[50%] border-accent hover:bg-accent hover:text-white transition-all duration-300 font-bold"
+                      onClick={() => handleDelete(post._id)}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
           </div>
           <motion.form
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             variants={fadeIn('up', 0.4)}
             initial='hidden'
             animate='show'
@@ -126,7 +133,7 @@ const Dashboard = () => {
             <button className='btn mb-4 rounded-md border border-white/50 w-full px-8 flex items-center justify-center overflow-hidden hover:border-accent hover:text-accent group'>
               <span className='transition-all duration-500'>Post</span>
             </button>
-        </motion.form>
+          </motion.form>
         </div>
       </BaseLayout>
     )
