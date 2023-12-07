@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation';
 import React from 'react'
 import useSWR, { SWRResponse } from 'swr';
 
-import styles from './page.module.css'
-
 // framer-motion
 import { motion } from 'framer-motion'
 import { fadeIn } from '@/variant'
@@ -98,16 +96,16 @@ const Dashboard = () => {
   if (session.status === 'authenticated') {
     return (
       <BaseLayout>
-        <div className='container mx-auto flex gap-12'>
-          <div className={styles.posts}>
+        <div className='container overflow-y-scroll md:overflow-hidden mx-auto flex flex-col md:flex-row gap-12'>
+          <div className="flex-1">
             {isLoading
               ? "loading"
               : data?.map((post: any) => (
-                  <div className={styles.post} key={post._id}>
-                    <div className={styles.imgContainer}>
-                      <Image src={post.img} alt="" width={200} height={100} />
+                  <div className="post bg-black/30 p-8 rounded-lg flex flex-col md:flex-row gap-4 items-center justify-between my-12" key={post._id}>
+                    <div className="w-[150px] h-[100px]">
+                      <Image src={post.img} className='object-cover' alt="" width={150} height={100} />
                     </div>
-                    <h2 className={styles.postTitle}>{post.title}</h2>
+                    <h2 className='text-2xl font-semibold'>{post.title}</h2>
                     <button
                       className="delete-button px-4 p-2 text-accent border rounded-[50%] border-accent hover:bg-accent hover:text-white transition-all duration-300 font-bold"
                       onClick={() => handleDelete(post._id)}
