@@ -4,7 +4,8 @@ import Link from 'next/link'
 import React from 'react'
 
 async function getData() {
-  const res = await fetch('http://localhost:3000/api/posts', {
+  const apiUrl = process.env.URL
+  const res = await fetch(`${apiUrl}/api/posts`, {
     cache: 'no-store',
   })
 

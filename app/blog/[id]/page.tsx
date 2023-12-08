@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation'
 import React from 'react'
 
 async function getData(id: number) {
-  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+  const apiUrl = process.env.URL
+  const res = await fetch(`${apiUrl}/api/posts/${id}`, {
     cache: 'no-store'
   })
 
