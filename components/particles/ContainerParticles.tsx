@@ -87,9 +87,7 @@ const ContainerParticles = () => {
         },
         detectRetina: true,
       }}
-    >
-
-    </Particles>
+    />
   )
 }
 
