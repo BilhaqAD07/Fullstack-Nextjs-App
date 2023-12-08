@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 async function getData() {
-  const res = await fetch('http://localhost:3000/api/posts', {
+  const res = await fetch('fullstack-nextjs-app-omega.vercel.app/api/posts', {
     cache: 'no-store',
   })
 
